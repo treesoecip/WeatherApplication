@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, Button, StyleSheet, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, Dimensions } from 'react-native';
 
 const wind = require('./gambar/wind.png');
 const temp = require('./gambar/temp.png');
@@ -15,51 +15,59 @@ const copy = require('./gambar/copy.png');
 const long = require('./gambar/humidity.png');
 const lat = require('./gambar/humidity.png');
 
-
-export default class PrakiraanCuaca extends React.Component {
-  constructor(props) {
+export default class Weather extends React.Component {
+constructor(props) {
     super(props);
-      this.state = {
-        data: [],
-        getKota: '',
-        kota: '',
-
-  };
+    this.state = {
+      kota: '',
+      forecast: {
+        id: '',
+        nama: '',
+        main: '',
+        desc: '',
+        temp: '',
+        pressure: '',
+        humidity: '',
+        sea: '',
+        ground: '',
+        wind: '',
+        sunrise: '',
+        sunset: '',
+        long: '',
+        lat: ''
+      }
+    };
   }
-
-
-
   async getWeather() {
-    return fetch("http://api.openweathermap.org/data/2.5/weather?q=" + this.state.getKota + "&appid=9e7fbfd19ddf492502ca1a31dce8c3a9")
-    .then((response) => response.json())
-    .then((res) => {
-      console.log(res);
-      //console.warn('data From API', res.weather)
-      this.setState({
-        id: res.weather[0].id,
-        nama: res.name,
-        main: res.weather[0].main,
-        desc: res.weather[0].description,
-        temp: res.main.temp,
-        pressure: res.main.pressure,
-        humidity: res.main.humidity,
-        sea: res.main.sea_level,
-        ground: res.main.grnd_level,
-        wind: res.wind.speed,
-        sunrise: res.sys.sunrise,
-        sunset: res.sys.sunset,
-        long: res.coord.lon,
-        lat: res.coord.lat,
 
+  try {
+    let response = await fetch(
+      'http://api.openweathermap.org/data/2.5/weather?q='+ this.state.kota + '&appid=9e7fbfd19ddf492502ca1a31dce8c3a9'
+    );
 
-      })
-    })
-    // .catch((error) => {
-    //     console.error(error);
-    //   });
+    let responseJson = await response.json();
+    return this.setState({
+      forecast: {
+        id: responseJson.weather[0].id,
+        nama: responseJson.name,
+        main: responseJson.weather[0].main,
+        desc: responseJson.weather[0].description,
+        temp: responseJson.main.temp,
+        pressure: responseJson.main.pressure,
+        humidity: responseJson.main.humidity,
+        sea: responseJson.main.sea_level,
+        ground: responseJson.main.grnd_level,
+        wind: responseJson.wind.speed,
+        sunrise: responseJson.sys.sunrise,
+        sunset: responseJson.sys.sunset,
+        long: responseJson.coord.lon,
+        lat: responseJson.coord.lat,
+      }
+    });
+  } catch (error) {
+    console.error(error);
   }
-
-
+}
 
 
   render() {
@@ -73,9 +81,10 @@ export default class PrakiraanCuaca extends React.Component {
           <TextInput
               style={{
                 backgroundColor: 'white',
-                width: 150
+                width: 150,
+                textAlign: 'center'
               }}
-                onChangeText={(getKota) => this.setState({ getKota })}
+                onChangeText={(kota) => this.setState({ kota })}
           />
 
           <Button
@@ -86,77 +95,78 @@ export default class PrakiraanCuaca extends React.Component {
               color='#0D47A1'
               fontColor='blue'
 
+
           />
         </View>
         <View style={styles.boxMenu}>
           <View style={styles.boxMenu3}>
-              <Text>Kota: {this.state.nama}</Text>
+              <Text>Kota: {this.state.forecast.nama}</Text>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
               <Image source={temp} style={styles.icon} />
-              <Text>Temp: {this.state.temp}</Text>
+              <Text>Temp: {this.state.forecast.temp}</Text>
             </View>
             <View style={styles.boxMenu2}>
               <Image source={wind} style={styles.icon} />
-              <Text>Wind Speed: {this.state.wind}</Text>
+              <Text>Wind Speed: {this.state.forecast.wind}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
               <Image source={long} style={styles.icon} />
-              <Text>Longitude: {this.state.long}</Text>
+              <Text>Longitude: {this.state.forecast.long}</Text>
             </View>
             <View style={styles.boxMenu2}>
               <Image source={lat} style={styles.icon} />
-              <Text>Latittude: {this.state.lat}</Text>
+              <Text>Latittude: {this.state.forecast.lat}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
               <Image source={cloud} style={styles.icon} />
-              <Text>Main: {this.state.main}</Text>
+              <Text>Main: {this.state.forecast.main}</Text>
             </View>
             <View style={styles.boxMenu2}>
               <Image source={cloudi} style={styles.icon} />
-              <Text>Main Desc: {this.state.desc}</Text>
+              <Text>Main Desc: {this.state.forecast.desc}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
               <Image source={pressure} style={styles.icon} />
-              <Text>Presure: {this.state.pressure}</Text>
+              <Text>Presure: {this.state.forecast.pressure}</Text>
             </View>
             <View style={styles.boxMenu2}>
               <Image source={humidity} style={styles.icon} />
-              <Text>Humadity: {this.state.humidity}</Text>
+              <Text>Humadity: {this.state.forecast.humidity}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
               <Image source={sea} style={styles.icon} />
-              <Text>Sea Level: {this.state.sea}</Text>
+              <Text>Sea Level: {this.state.forecast.sea}</Text>
             </View>
             <View style={styles.boxMenu2}>
               <Image source={ground} style={styles.icon} />
-              <Text>Ground Level: {this.state.ground}</Text>
+              <Text>Ground Level: {this.state.forecast.ground}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
               <Image source={sunrise} style={styles.icon} />
-              <Text>Sunrise: {this.state.sunrise}</Text>
+              <Text>Sunrise: {this.state.forecast.sunrise}</Text>
             </View>
             <View style={styles.boxMenu2}>
               <Image source={sunset} style={styles.icon} />
-              <Text>Sunset: {this.state.sunset}</Text>
+              <Text>Sunset: {this.state.forecast.sunset}</Text>
             </View>
           </View>
 
         </View>
         <View style={styles.boxfoot}>
           <Text style={styles.textfoot}>
-          Copyright <Image source={copy} style={styles.icon} /> tri_sucipto
+          Copyright <Image source={copy} style={styles.icon} /> tri_sucipto #JaenKuliahDiPTI
           </Text>
         </View>
       </View>
@@ -244,4 +254,4 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   }
-})
+});
