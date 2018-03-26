@@ -135,25 +135,3 @@ const styles = StyleSheet.create({
     padding: 10
   }
 })
-
-// const styles = StyleSheet.create({
-//
-//   getWeather = () => {
-//   	let url = 'http://api.openweathermap.org/data/2.5/weather?q='
-//     + this.state.kota + '&appid=9e7fbfd19ddf492502ca1a31dce8c3a9';
-//     fetch (url)
-//     .then ((response) => response.json())
-//     .then ((responseJson) => {
-//     	console.log(responseJson);
-//     		this.setState({
-//     			forecast: {
-//     				main: responseJson.weather[0].main,
-//     				description: responseJson.weather[0].description,
-//     				temp: responseJson.main.temp
-//     			}
-//     		});
-//     	});
-//   }
-//
-//
-// })

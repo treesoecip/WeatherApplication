@@ -1,5 +1,9 @@
 import React from 'react';
-import { Text, View, TextInput, Button, StyleSheet } from 'react-native';
+import { Text, View, TextInput, Button, StyleSheet, Image } from 'react-native';
+
+const mainIcon = require('./gambar/main.png');
+const tempIcon = require('./gambar/temp.png');
+
 
 export default class PrakiraanCuaca extends React.Component {
   constructor(props) {
@@ -25,9 +29,18 @@ export default class PrakiraanCuaca extends React.Component {
       //console.warn('data From API', res.weather)
       this.setState({
         id: res.weather[0].id,
+        nama: res.name,
         main: res.weather[0].main,
-        description: res.weather[0].description,
-        temp: res.main.temp
+        desc: res.weather[0].description,
+        temp: res.main.temp,
+        pressure: res.main.pressure,
+        humidity: res.main.humidity,
+        sea: res.main.sea_level,
+        ground: res.main.grnd_level,
+        wind: res.wind.speed,
+        sunrise: res.sys.sunrise,
+        sunset: res.sys.sunset
+
       })
     })
     // .catch((error) => {
@@ -62,13 +75,53 @@ export default class PrakiraanCuaca extends React.Component {
           />
         </View>
         <View style={styles.boxMenu}>
-          <Text style={styles.textfoot} >
-            Kota          : {this.state.kota} {'\n'}{'\n'}
-            ID           : {this.state.id}{'\n'}
-            suhu          : {this.state.temp}{'\n'}
-            cuaca       : {this.state.main}{'\n'}
-            Deskripsi : {this.state.description}{'\n'}
-          </Text>
+          <View style={styles.boxMenu3}>
+              <Text>Kota: {this.state.nama}</Text>
+          </View>
+          <View style={styles.boxMenu1}>
+            <View style={styles.boxMenu2}>
+
+              <Image source={tempIcon} style={styles.icon} />
+
+              <Text>Temp: {this.state.temp}</Text>
+            </View>
+            <View style={styles.boxMenu2}>
+              <Text>Wind Speed: {this.state.wind}</Text>
+            </View>
+          </View>
+          <View style={styles.boxMenu1}>
+            <View style={styles.boxMenu2}>
+              <Text>Main: {this.state.main}</Text>
+            </View>
+            <View style={styles.boxMenu2}>
+              <Text>Main Desc: {this.state.desc}</Text>
+            </View>
+          </View>
+          <View style={styles.boxMenu1}>
+            <View style={styles.boxMenu2}>
+              <Text>Presure: {this.state.pressure}</Text>
+            </View>
+            <View style={styles.boxMenu2}>
+              <Text>Humadity: {this.state.humidity}</Text>
+            </View>
+          </View>
+          <View style={styles.boxMenu1}>
+            <View style={styles.boxMenu2}>
+              <Text>Sea Level: {this.state.sea}</Text>
+            </View>
+            <View style={styles.boxMenu2}>
+              <Text>Ground Level: {this.state.ground}</Text>
+            </View>
+          </View>
+          <View style={styles.boxMenu1}>
+            <View style={styles.boxMenu2}>
+              <Text>Sunrise: {this.state.sunrise}</Text>
+            </View>
+            <View style={styles.boxMenu2}>
+              <Text>Sunset: {this.state.sunset}</Text>
+            </View>
+          </View>
+
         </View>
         <View style={styles.boxfoot}>
           <Text style={styles.textfoot}>
@@ -103,11 +156,34 @@ const styles = StyleSheet.create({
 
   },
   boxMenu: {
-    flex: 3,
+    flex: 4,
     backgroundColor: '#3949AB',
     margin: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+
     //justifyContent: 'center',
     //alignItems: 'center'
+  },
+  boxMenu1: {
+    flex: 0.5,
+    backgroundColor: '#9FA8DA',
+    margin: 5,
+    flexDirection: 'row',
+
+  },
+  boxMenu2: {
+    flex: 0.5,
+    backgroundColor: '#C5CAE9',
+    margin: 5,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  boxMenu3: {
+    flex: 0.3,
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
   boxfoot: {
     flex: 0.7,
@@ -131,27 +207,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'white',
     padding: 10
+  },
+  icon: {
+    tintColor: '#fff',
+    height: 20,
+    width: 20,
   }
 })
-
-// const styles = StyleSheet.create({
-//
-//   getWeather = () => {
-//   	let url = 'http://api.openweathermap.org/data/2.5/weather?q='
-//     + this.state.kota + '&appid=9e7fbfd19ddf492502ca1a31dce8c3a9';
-//     fetch (url)
-//     .then ((response) => response.json())
-//     .then ((responseJson) => {
-//     	console.log(responseJson);
-//     		this.setState({
-//     			forecast: {
-//     				main: responseJson.weather[0].main,
-//     				description: responseJson.weather[0].description,
-//     				temp: responseJson.main.temp
-//     			}
-//     		});
-//     	});
-//   }
-//
-//
-// })
