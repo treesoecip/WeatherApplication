@@ -27,7 +27,9 @@ export default class PrakiraanCuaca extends React.Component {
         id: res.weather[0].id,
         main: res.weather[0].main,
         description: res.weather[0].description,
-        temp: res.main.temp
+        temp: res.main.temp,
+        nama: res.name
+
       })
     })
     // .catch((error) => {
@@ -63,10 +65,10 @@ export default class PrakiraanCuaca extends React.Component {
         </View>
         <View style={styles.boxMenu}>
           <Text style={styles.textfoot} >
-            Kota          : {this.state.kota} {'\n'}{'\n'}
-            ID           : {this.state.id}{'\n'}
-            suhu          : {this.state.temp}{'\n'}
-            cuaca       : {this.state.main}{'\n'}
+            Kota          : {this.state.nama} {'\n'}{'\n'}
+            ID            : {this.state.id}{'\n'}
+            Suhu          : {this.state.temp}{'\n'}
+            Cuaca       : {this.state.main}{'\n'}
             Deskripsi : {this.state.description}{'\n'}
           </Text>
         </View>

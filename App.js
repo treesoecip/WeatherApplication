@@ -3,13 +3,14 @@ import { View, StyleSheet } from 'react-native';
 //import VolumeBalok from './src/latihan/volumeBalok';
 //import Header from './src/Cuaca/Header';
 //import BelajarLayout from './src/comp/BelajarLayout';
-import BelajarLayout1 from './src/comp/BelajarLayout1';
+//import BelajarLayout1 from './src/comp/BelajarLayout1';
+import PrakiraanCuaca from './src/comp/PrakiraanCuaca';
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.containerMain}>
-          <BelajarLayout1 />
+          <PrakiraanCuaca />
       </View>
 
     );

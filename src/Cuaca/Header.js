@@ -17,7 +17,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 10,
-    height: 50,
+    height: 55,
     position: 'relative'
   },
   textHeader: {
