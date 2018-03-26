@@ -1,8 +1,19 @@
 import React from 'react';
 import { Text, View, TextInput, Button, StyleSheet, Image } from 'react-native';
 
-const mainIcon = require('./gambar/main.png');
-const tempIcon = require('./gambar/temp.png');
+const wind = require('./gambar/wind.png');
+const temp = require('./gambar/temp.png');
+const cloud = require('./gambar/cloud.png');
+const cloudi = require('./gambar/cloudi.png');
+const sunset = require('./gambar/sunset.png');
+const sunrise = require('./gambar/sunrise.png');
+const sea = require('./gambar/sea.png');
+const ground = require('./gambar/crack.png');
+const pressure = require('./gambar/pressure.png');
+const humidity = require('./gambar/humidity.png');
+const copy = require('./gambar/copy.png');
+const long = require('./gambar/humidity.png');
+const lat = require('./gambar/humidity.png');
 
 
 export default class PrakiraanCuaca extends React.Component {
@@ -18,11 +29,8 @@ export default class PrakiraanCuaca extends React.Component {
 
 
 
-  getWeather() {
-    this.setState({
-      kota: this.state.getKota
-    })
-    return fetch("http://api.openweathermap.org/data/2.5/weather?q=" + this.state.kota + "&appid=9e7fbfd19ddf492502ca1a31dce8c3a9")
+  async getWeather() {
+    return fetch("http://api.openweathermap.org/data/2.5/weather?q=" + this.state.getKota + "&appid=9e7fbfd19ddf492502ca1a31dce8c3a9")
     .then((response) => response.json())
     .then((res) => {
       console.log(res);
@@ -39,7 +47,10 @@ export default class PrakiraanCuaca extends React.Component {
         ground: res.main.grnd_level,
         wind: res.wind.speed,
         sunrise: res.sys.sunrise,
-        sunset: res.sys.sunset
+        sunset: res.sys.sunset,
+        long: res.coord.lon,
+        lat: res.coord.lat,
+
 
       })
     })
@@ -47,6 +58,9 @@ export default class PrakiraanCuaca extends React.Component {
     //     console.error(error);
     //   });
   }
+
+
+
 
   render() {
     return (
@@ -80,44 +94,61 @@ export default class PrakiraanCuaca extends React.Component {
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
-
-              <Image source={tempIcon} style={styles.icon} />
-
+              <Image source={temp} style={styles.icon} />
               <Text>Temp: {this.state.temp}</Text>
             </View>
             <View style={styles.boxMenu2}>
+              <Image source={wind} style={styles.icon} />
               <Text>Wind Speed: {this.state.wind}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
+              <Image source={long} style={styles.icon} />
+              <Text>Longitude: {this.state.long}</Text>
+            </View>
+            <View style={styles.boxMenu2}>
+              <Image source={lat} style={styles.icon} />
+              <Text>Latittude: {this.state.lat}</Text>
+            </View>
+          </View>
+          <View style={styles.boxMenu1}>
+            <View style={styles.boxMenu2}>
+              <Image source={cloud} style={styles.icon} />
               <Text>Main: {this.state.main}</Text>
             </View>
             <View style={styles.boxMenu2}>
+              <Image source={cloudi} style={styles.icon} />
               <Text>Main Desc: {this.state.desc}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
+              <Image source={pressure} style={styles.icon} />
               <Text>Presure: {this.state.pressure}</Text>
             </View>
             <View style={styles.boxMenu2}>
+              <Image source={humidity} style={styles.icon} />
               <Text>Humadity: {this.state.humidity}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
+              <Image source={sea} style={styles.icon} />
               <Text>Sea Level: {this.state.sea}</Text>
             </View>
             <View style={styles.boxMenu2}>
+              <Image source={ground} style={styles.icon} />
               <Text>Ground Level: {this.state.ground}</Text>
             </View>
           </View>
           <View style={styles.boxMenu1}>
             <View style={styles.boxMenu2}>
+              <Image source={sunrise} style={styles.icon} />
               <Text>Sunrise: {this.state.sunrise}</Text>
             </View>
             <View style={styles.boxMenu2}>
+              <Image source={sunset} style={styles.icon} />
               <Text>Sunset: {this.state.sunset}</Text>
             </View>
           </View>
@@ -125,7 +156,7 @@ export default class PrakiraanCuaca extends React.Component {
         </View>
         <View style={styles.boxfoot}>
           <Text style={styles.textfoot}>
-          Copyright @tri_sucipto
+          Copyright <Image source={copy} style={styles.icon} /> tri_sucipto
           </Text>
         </View>
       </View>
@@ -148,7 +179,7 @@ const styles = StyleSheet.create({
 
   },
   boxslider: {
-    flex: 2,
+    flex: 1.5,
     backgroundColor: '#0D47A1',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -209,7 +240,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   icon: {
-    tintColor: '#fff',
+    tintColor: 'blue',
     height: 20,
     width: 20,
   }
